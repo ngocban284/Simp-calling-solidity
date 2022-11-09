@@ -99,11 +99,15 @@ export const useAbiEncoder = () => {
   const { parameters, onChange: onParametersChange, onReset } = useParameters();
 
   const onConnectWallet = () => {
-    window.ethereum
-      .request({ method: "eth_requestAccounts" })
-      .then((accounts: string[]) => {
-        setWalletAddress(accounts[0]);
-      });
+    if (walletAddress) {
+      setWalletAddress("");
+    } else {
+      window.ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then((accounts: string[]) => {
+          setWalletAddress(accounts[0]);
+        });
+    }
   };
 
   const onClear = () => {

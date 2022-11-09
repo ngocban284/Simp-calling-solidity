@@ -18,7 +18,10 @@ const ConnectWallet: React.FC<ConnectWalletProps> = ({
     <div className="connect-wallet">
       <div className="connect-wallet__button">
         {walletAddress ? (
-          <button className="button button--hover"> {walletAddress} </button>
+          <button className="button button--hover" onClick={onClickConnect}>
+            {" "}
+            {walletAddress}{" "}
+          </button>
         ) : (
           <button className="button button--hover" onClick={onClickConnect}>
             {" "}
