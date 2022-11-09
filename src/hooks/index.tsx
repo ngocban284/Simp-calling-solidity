@@ -62,6 +62,7 @@ const useParameters = () => {
     type: AbiTypeEnum.CONSTRUCTOR,
     contractAddress: "",
     funcName: "",
+    stateMutability: "",
     inputs: [
       {
         type: "",
@@ -87,6 +88,7 @@ export const useAbiEncoder = () => {
   const [encoded, setEncoded] = useState<string>("");
   const [encodeErrors, setEncodeErrors] = useState<string[]>([]);
   const [walletAddress, setWalletAddress] = useState<string>("");
+  const [resultOfCall, setResultOfCall] = useState<string>("");
 
   const {
     abi,
@@ -120,8 +122,9 @@ export const useAbiEncoder = () => {
     onReset();
   };
 
-  const handleCallFuncClick = () => {
-    callFunction(abi, parameters);
+  const handleCallFuncClick = async () => {
+    let results = await callFunction(abi, parameters, walletAddress);
+    setResultOfCall(results.toString());
   };
 
   const onChange = (name: string) => (value: string | Parameters) => {
@@ -139,22 +142,24 @@ export const useAbiEncoder = () => {
         type: AbiTypeEnum.CONSTRUCTOR,
         contractAddress: "",
         funcName: "",
+        stateMutability: "",
         inputs: (abiConstructor.inputs || []).map((i) => ({ ...i, value: "" })),
       });
     }
   }, [abiFunctions]);
 
   useEffect(() => {
-    const { errors, encoded } = encode(parameters);
-    handleCallFuncClick();
-    setEncoded(encoded);
-    setEncodeErrors(errors);
+    // const { errors, encoded } = encode(parameters);
+
+    setEncoded(resultOfCall);
+    // setEncodeErrors(errors);
   }, [
     parameters,
     parameters.type,
     parameters.contractAddress,
     parameters.funcName,
     parameters.inputs,
+    resultOfCall,
   ]);
 
   return {
@@ -166,6 +171,7 @@ export const useAbiEncoder = () => {
     onParse: handleParseClick,
     onClear,
     onConnectWallet,
+    handleCallFuncClick,
     abiFunctions,
     parameters,
     walletAddress,

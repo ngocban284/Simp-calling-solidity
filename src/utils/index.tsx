@@ -156,7 +156,11 @@ const getTupleArguments = (sig: string) => {
   return `(${args.join(",")})`;
 };
 
-export const callFunction = async (abi: string, parameters: Parameters) => {
+export const callFunction = async (
+  abi: string,
+  parameters: Parameters,
+  walletAddress: string
+) => {
   // get contract from bscTestnet
   const provider = new ethers.providers.JsonRpcProvider(bscTestnet);
   // get contract
@@ -165,6 +169,36 @@ export const callFunction = async (abi: string, parameters: Parameters) => {
     abi,
     provider
   );
+
+  // get name of function from parameters
+  const functionName = parameters.funcName;
+  // type of type of function
+  const stateMutability = parameters.stateMutability;
+  // get arguments of function from parameters
+  const inputs = parameters.inputs;
+  // define array
+  const args: any[] = [];
+
+  console.log(inputs);
+
+  // definet any variable
+  let result: any;
+
+  if (stateMutability === "view" || stateMutability === "pure") {
+    for (let i = 0; i < inputs.length; i++) {
+      args.push(inputs[i].value);
+    }
+    result = await contract[functionName](...args);
+  } else {
+    for (let i = 0; i < inputs.length; i++) {
+      args.push(inputs[i].value);
+    }
+    // user address call with . setting gas manually
+    result = await contract[functionName](...args, { gasLimit: 3e6 });
+  }
+
+  // console.log(walletAddress);
+  return result;
 };
 
 export const encode = (parameters: Parameters) => {

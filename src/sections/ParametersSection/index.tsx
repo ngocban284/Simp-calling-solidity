@@ -28,6 +28,7 @@ import {
 interface ParametersSectionProps {
   abiFunctions: { [x: string]: AbiItem };
   onChange: (parameters: Parameters) => void;
+  onCallFunc: () => void;
   value: Parameters;
   errors?: string[];
 }
@@ -149,10 +150,15 @@ const ParametersSection: React.FC<ParametersSectionProps> = ({
   abiFunctions,
   value,
   onChange,
+  onCallFunc,
   errors,
 }) => {
   const onChangeContractAddress = (e: ChangeEvent<HTMLInputElement>) => {
     onChange({ ...value, contractAddress: e.target.value });
+  };
+
+  const onCallFuncClick = async () => {
+    await onCallFunc();
   };
 
   const onChangeFuncName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -166,6 +172,7 @@ const ParametersSection: React.FC<ParametersSectionProps> = ({
     pushGtagChooseFunction(newType);
     const typeDescription = abiFunctions[newType] || {};
     let funcName = "";
+    let stateMutability = "";
     const inputs: any[] = (typeDescription.inputs || []).map((input: any) => {
       return {
         ...input,
@@ -178,11 +185,13 @@ const ParametersSection: React.FC<ParametersSectionProps> = ({
       ) === -1
     )
       funcName = typeDescription.name || "";
+    stateMutability = typeDescription.stateMutability || "";
 
     onChange({
       ...value,
       type: newType,
       funcName,
+      stateMutability,
       inputs,
     });
   };
@@ -286,6 +295,11 @@ const ParametersSection: React.FC<ParametersSectionProps> = ({
           </Button>
         </div>
       )}
+      <div className="section-choose__buttons">
+        <Button className="button button--hover" onClick={onCallFuncClick}>
+          Call function
+        </Button>
+      </div>
     </Section>
   );
 };

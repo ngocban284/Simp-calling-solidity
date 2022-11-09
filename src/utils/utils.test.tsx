@@ -29,6 +29,7 @@ describe("utils/encode", () => {
       type: "",
       contractAddress: "",
       funcName: "vestTokens",
+      stateMutability: "",
       inputs: [
         {
           name: "",
@@ -77,6 +78,7 @@ describe("utils/encode", () => {
       type: "constructor",
       contractAddress: "",
       funcName: "",
+      stateMutability: "",
       inputs: [
         {
           name: "",
@@ -106,6 +108,7 @@ describe("utils/encode", () => {
       type: "",
       contractAddress: "",
       funcName: "setGreeting",
+      stateMutability: "",
       inputs: [
         {
           name: "",
@@ -128,6 +131,7 @@ describe("utils/encode", () => {
       type: "",
       contractAddress: "",
       funcName: "setGreeting",
+      stateMutability: "",
       inputs: [
         {
           name: "",
@@ -160,6 +164,7 @@ describe("utils/encode", () => {
       type: "",
       contractAddress: "",
       funcName: "verifyTx",
+      stateMutability: "",
       inputs: [
         {
           name: "",

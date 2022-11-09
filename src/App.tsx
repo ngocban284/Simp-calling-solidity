@@ -16,6 +16,7 @@ function App() {
     onParse,
     onClear,
     onConnectWallet,
+    handleCallFuncClick,
     parseError,
     parameters,
     abiFunctions,
@@ -37,6 +38,7 @@ function App() {
 
       <ParametersSection
         onChange={onChange("parameters")}
+        onCallFunc={handleCallFuncClick}
         value={parameters}
         abiFunctions={abiFunctions}
         errors={encodeErrors}

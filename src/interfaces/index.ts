@@ -49,5 +49,6 @@ export interface Parameters {
   type: string;
   contractAddress: string;
   funcName: string;
+  stateMutability: string;
   inputs: ParameterInput[];
 }
