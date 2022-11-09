@@ -1,10 +1,15 @@
 import React from "react";
 
 import Logo from "../Logo";
-
+import ConnectWallet from "../Wallet";
 import "./Header.css";
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  walletAddress: string;
+  onConnectWallet: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ walletAddress, onConnectWallet }) => {
   return (
     <header className="header">
       <div className="container header__container">
@@ -13,6 +18,10 @@ const Header: React.FC = () => {
             <Logo />
           </a>
         </div>
+        <ConnectWallet
+          onConnectWallet={onConnectWallet}
+          walletAddress={walletAddress}
+        />
       </div>
     </header>
   );

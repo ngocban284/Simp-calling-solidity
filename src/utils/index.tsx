@@ -3,10 +3,19 @@ import { ethers, utils } from "ethers";
 import { AbiInput, AbiInputType, AbiItem, Parameters } from "../interfaces";
 
 // use environment variable to set the default network
+declare let window: any;
 
 const bscTestnet =
   process.env.BSC_TESTNET || "https://data-seed-prebsc-1-s1.binance.org:8545";
 const chainId = process.env.CHAIN_ID || 97;
+
+export const connectWallet = async (walletAddress: string) => {
+  // connect from metamask
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const accounts = await provider.send("eth_requestAccounts", []);
+  console.log("accounts", accounts);
+  walletAddress = accounts[0];
+};
 
 export const isArrayType = (type: string) => {
   return type.includes("[]") || type.match(/\[[0-9]+\]/);

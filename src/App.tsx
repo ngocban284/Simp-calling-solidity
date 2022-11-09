@@ -15,15 +15,17 @@ function App() {
     onChange,
     onParse,
     onClear,
+    onConnectWallet,
     parseError,
     parameters,
     abiFunctions,
     encodeErrors,
+    walletAddress,
   } = useAbiEncoder();
 
   return (
     <Providers>
-      <Header />
+      <Header onConnectWallet={onConnectWallet} walletAddress={walletAddress} />
 
       <ParseSection
         onChange={onChange("abi")}

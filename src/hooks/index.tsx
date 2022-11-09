@@ -10,6 +10,8 @@ import {
 import { encode, parse, callFunction } from "../utils";
 import { pushGtagEvent } from "../utils/gtag";
 
+declare const window: any;
+
 const useAbiParser = () => {
   const [abi, setAbi] = useState<string>("");
   const [parseError, setParseError] = useState<string | null>(null);
@@ -84,6 +86,7 @@ const useParameters = () => {
 export const useAbiEncoder = () => {
   const [encoded, setEncoded] = useState<string>("");
   const [encodeErrors, setEncodeErrors] = useState<string[]>([]);
+  const [walletAddress, setWalletAddress] = useState<string>("");
 
   const {
     abi,
@@ -94,6 +97,14 @@ export const useAbiEncoder = () => {
   } = useAbiParser();
 
   const { parameters, onChange: onParametersChange, onReset } = useParameters();
+
+  const onConnectWallet = () => {
+    window.ethereum
+      .request({ method: "eth_requestAccounts" })
+      .then((accounts: string[]) => {
+        setWalletAddress(accounts[0]);
+      });
+  };
 
   const onClear = () => {
     onAbiChange("");
@@ -150,7 +161,9 @@ export const useAbiEncoder = () => {
     parseError,
     onParse: handleParseClick,
     onClear,
+    onConnectWallet,
     abiFunctions,
     parameters,
+    walletAddress,
   };
 };
