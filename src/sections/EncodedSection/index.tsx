@@ -8,7 +8,7 @@ import "./EncodedSection.css";
 
 const EncodedSection: React.FC<{ value: string }> = ({ value }) => {
   const onCopy = () => pushGtagParsesActionButton("copy");
-  console.log(value);
+
   return (
     <Section className="encoded-section">
       <textarea

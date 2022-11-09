@@ -2,9 +2,11 @@ import { ethers, utils } from "ethers";
 
 import { AbiInput, AbiInputType, AbiItem, Parameters } from "../interfaces";
 
-// url bsc testnet
-const bscTestnet = "https://data-seed-prebsc-1-s1.binance.org:8545/";
-const chainId = 97;
+// use environment variable to set the default network
+
+const bscTestnet =
+  process.env.BSC_TESTNET || "https://data-seed-prebsc-1-s1.binance.org:8545";
+const chainId = process.env.CHAIN_ID || 97;
 
 export const isArrayType = (type: string) => {
   return type.includes("[]") || type.match(/\[[0-9]+\]/);
@@ -146,8 +148,6 @@ const getTupleArguments = (sig: string) => {
 };
 
 export const callFunction = async (abi: string, parameters: Parameters) => {
-  // parse abi to json
-  const abiJson = JSON.parse(abi) as AbiItem;
   // get contract from bscTestnet
   const provider = new ethers.providers.JsonRpcProvider(bscTestnet);
   // get contract
@@ -156,8 +156,6 @@ export const callFunction = async (abi: string, parameters: Parameters) => {
     abi,
     provider
   );
-  //
-  console.log(contract.address);
 };
 
 export const encode = (parameters: Parameters) => {
