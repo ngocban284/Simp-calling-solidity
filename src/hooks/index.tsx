@@ -100,18 +100,6 @@ export const useAbiEncoder = () => {
 
   const { parameters, onChange: onParametersChange, onReset } = useParameters();
 
-  const onConnectWallet = () => {
-    if (walletAddress) {
-      setWalletAddress("");
-    } else {
-      window.ethereum
-        .request({ method: "eth_requestAccounts" })
-        .then((accounts: string[]) => {
-          setWalletAddress(accounts[0]);
-        });
-    }
-  };
-
   const onClear = () => {
     onAbiChange("");
     onReset();
@@ -170,7 +158,6 @@ export const useAbiEncoder = () => {
     parseError,
     onParse: handleParseClick,
     onClear,
-    onConnectWallet,
     handleCallFuncClick,
     abiFunctions,
     parameters,

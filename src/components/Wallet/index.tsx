@@ -1,29 +1,23 @@
 // connect wallet component
 import { connectWallet } from "../../utils";
+import { useMetaMask } from "metamask-react";
 
 interface ConnectWalletProps {
   walletAddress: string;
-  onConnectWallet: () => void;
 }
 
-const ConnectWallet: React.FC<ConnectWalletProps> = ({
-  walletAddress,
-  onConnectWallet,
-}) => {
-  const onClickConnect = () => {
-    onConnectWallet();
-  };
+const ConnectWallet: React.FC<ConnectWalletProps> = ({ walletAddress }) => {
+  const { status, connect, account, chainId, ethereum } = useMetaMask();
 
   return (
     <div className="connect-wallet">
       <div className="connect-wallet__button">
-        {walletAddress ? (
-          <button className="button button--hover" onClick={onClickConnect}>
-            {" "}
-            {walletAddress}{" "}
+        {status == "connected" ? (
+          <button className="button button--hover" onClick={connect}>
+            {account}
           </button>
         ) : (
-          <button className="button button--hover" onClick={onClickConnect}>
+          <button className="button button--hover" onClick={connect}>
             {" "}
             Connect Wallet{" "}
           </button>

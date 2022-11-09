@@ -15,7 +15,6 @@ function App() {
     onChange,
     onParse,
     onClear,
-    onConnectWallet,
     handleCallFuncClick,
     parseError,
     parameters,
@@ -26,7 +25,7 @@ function App() {
 
   return (
     <Providers>
-      <Header onConnectWallet={onConnectWallet} walletAddress={walletAddress} />
+      <Header walletAddress={walletAddress} />
 
       <ParseSection
         onChange={onChange("abi")}

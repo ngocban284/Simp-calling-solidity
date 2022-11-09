@@ -6,10 +6,9 @@ import "./Header.css";
 
 interface HeaderProps {
   walletAddress: string;
-  onConnectWallet: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ walletAddress, onConnectWallet }) => {
+const Header: React.FC<HeaderProps> = ({ walletAddress }) => {
   return (
     <header className="header">
       <div className="container header__container">
@@ -18,10 +17,7 @@ const Header: React.FC<HeaderProps> = ({ walletAddress, onConnectWallet }) => {
             <Logo />
           </a>
         </div>
-        <ConnectWallet
-          onConnectWallet={onConnectWallet}
-          walletAddress={walletAddress}
-        />
+        <ConnectWallet walletAddress={walletAddress} />
       </div>
     </header>
   );

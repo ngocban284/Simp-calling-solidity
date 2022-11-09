@@ -163,12 +163,15 @@ export const callFunction = async (
 ) => {
   // get contract from bscTestnet
   const provider = new ethers.providers.JsonRpcProvider(bscTestnet);
+
+  // wallet
+
+  const wallet = new ethers.Wallet("", provider);
+  // signer
+  const signer = wallet.connect(provider);
+
   // get contract
-  const contract = new ethers.Contract(
-    parameters.contractAddress,
-    abi,
-    provider
-  );
+  const contract = new ethers.Contract(parameters.contractAddress, abi, signer);
 
   // get name of function from parameters
   const functionName = parameters.funcName;
@@ -178,8 +181,6 @@ export const callFunction = async (
   const inputs = parameters.inputs;
   // define array
   const args: any[] = [];
-
-  console.log(inputs);
 
   // definet any variable
   let result: any;
@@ -194,7 +195,11 @@ export const callFunction = async (
       args.push(inputs[i].value);
     }
     // user address call with . setting gas manually
-    result = await contract[functionName](...args, { gasLimit: 3e6 });
+    let tx = await contract[functionName](...args, { gasLimit: 3e6 });
+
+    result = await tx.wait();
+    result = JSON.stringify(result, null, 2);
+    console.log(result);
   }
 
   // console.log(walletAddress);
