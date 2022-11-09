@@ -7,7 +7,7 @@ import {
   Parameters,
 } from "../interfaces";
 
-import { encode, parse } from "../utils";
+import { encode, parse, callFunction } from "../utils";
 import { pushGtagEvent } from "../utils/gtag";
 
 const useAbiParser = () => {
@@ -105,6 +105,10 @@ export const useAbiEncoder = () => {
     onReset();
   };
 
+  const handleCallFuncClick = () => {
+    callFunction(abi, parameters);
+  };
+
   const onChange = (name: string) => (value: string | Parameters) => {
     if (name === "parameters") {
       onParametersChange(value as Parameters);
@@ -127,10 +131,17 @@ export const useAbiEncoder = () => {
 
   useEffect(() => {
     const { errors, encoded } = encode(parameters);
+    handleCallFuncClick();
     setEncoded(encoded);
     setEncodeErrors(errors);
-  }, [parameters, parameters.type, parameters.funcName, parameters.inputs]);
-  console.log("parameters", parameters);
+  }, [
+    parameters,
+    parameters.type,
+    parameters.contractAddress,
+    parameters.funcName,
+    parameters.inputs,
+  ]);
+
   return {
     encoded,
     encodeErrors,

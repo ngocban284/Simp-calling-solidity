@@ -32,12 +32,14 @@ function App() {
         onClear={onClear}
         parseError={parseError}
       />
+
       <ParametersSection
         onChange={onChange("parameters")}
         value={parameters}
         abiFunctions={abiFunctions}
         errors={encodeErrors}
       />
+
       <EncodedSection value={encoded} />
     </Providers>
   );
