@@ -2,11 +2,11 @@
 import { connectWallet } from "../../utils";
 import { useMetaMask } from "metamask-react";
 
-interface ConnectWalletProps {
-  walletAddress: string;
-}
+import { ethers } from "ethers";
 
-const ConnectWallet: React.FC<ConnectWalletProps> = ({ walletAddress }) => {
+declare const window: any;
+
+const ConnectWallet: React.FC = () => {
   const { status, connect, account, chainId, ethereum } = useMetaMask();
 
   return (

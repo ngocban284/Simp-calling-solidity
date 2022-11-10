@@ -4,11 +4,7 @@ import Logo from "../Logo";
 import ConnectWallet from "../Wallet";
 import "./Header.css";
 
-interface HeaderProps {
-  walletAddress: string;
-}
-
-const Header: React.FC<HeaderProps> = ({ walletAddress }) => {
+const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="container header__container">
@@ -17,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ walletAddress }) => {
             <Logo />
           </a>
         </div>
-        <ConnectWallet walletAddress={walletAddress} />
+        <ConnectWallet />
       </div>
     </header>
   );

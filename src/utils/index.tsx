@@ -2,21 +2,6 @@ import { ethers, utils } from "ethers";
 
 import { AbiInput, AbiInputType, AbiItem, Parameters } from "../interfaces";
 
-// use environment variable to set the default network
-declare let window: any;
-
-const bscTestnet =
-  process.env.BSC_TESTNET || "https://data-seed-prebsc-1-s1.binance.org:8545";
-const chainId = process.env.CHAIN_ID || 97;
-
-export const connectWallet = async (walletAddress: string) => {
-  // connect from metamask
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const accounts = await provider.send("eth_requestAccounts", []);
-  console.log("accounts", accounts);
-  walletAddress = accounts[0];
-};
-
 export const isArrayType = (type: string) => {
   return type.includes("[]") || type.match(/\[[0-9]+\]/);
 };
@@ -154,56 +139,6 @@ const getTupleArguments = (sig: string) => {
   });
 
   return `(${args.join(",")})`;
-};
-
-export const callFunction = async (
-  abi: string,
-  parameters: Parameters,
-  walletAddress: string
-) => {
-  // get contract from bscTestnet
-  const provider = new ethers.providers.JsonRpcProvider(bscTestnet);
-
-  // wallet
-
-  const wallet = new ethers.Wallet("", provider);
-  // signer
-  const signer = wallet.connect(provider);
-
-  // get contract
-  const contract = new ethers.Contract(parameters.contractAddress, abi, signer);
-
-  // get name of function from parameters
-  const functionName = parameters.funcName;
-  // type of type of function
-  const stateMutability = parameters.stateMutability;
-  // get arguments of function from parameters
-  const inputs = parameters.inputs;
-  // define array
-  const args: any[] = [];
-
-  // definet any variable
-  let result: any;
-
-  if (stateMutability === "view" || stateMutability === "pure") {
-    for (let i = 0; i < inputs.length; i++) {
-      args.push(inputs[i].value);
-    }
-    result = await contract[functionName](...args);
-  } else {
-    for (let i = 0; i < inputs.length; i++) {
-      args.push(inputs[i].value);
-    }
-    // user address call with . setting gas manually
-    let tx = await contract[functionName](...args, { gasLimit: 3e6 });
-
-    result = await tx.wait();
-    result = JSON.stringify(result, null, 2);
-    console.log(result);
-  }
-
-  // console.log(walletAddress);
-  return result;
 };
 
 export const encode = (parameters: Parameters) => {

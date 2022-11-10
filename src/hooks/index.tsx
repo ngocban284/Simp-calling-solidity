@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-
+import { useMetaMask } from "metamask-react";
+import { ethers } from "ethers";
 import {
   AbiItem,
   AbiTypeEnum,
@@ -87,8 +88,8 @@ const useParameters = () => {
 export const useAbiEncoder = () => {
   const [encoded, setEncoded] = useState<string>("");
   const [encodeErrors, setEncodeErrors] = useState<string[]>([]);
-  const [walletAddress, setWalletAddress] = useState<string>("");
-  const [resultOfCall, setResultOfCall] = useState<string>("");
+  const { status, connect, account, chainId, ethereum } = useMetaMask();
+  const [result, setResult] = useState<string>("");
 
   const {
     abi,
@@ -110,9 +111,49 @@ export const useAbiEncoder = () => {
     onReset();
   };
 
+  const handlerCallFuncResult = async () => {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = await provider.getSigner();
+    // // get contract
+    const contract = new ethers.Contract(
+      parameters.contractAddress,
+      abi,
+      signer
+    );
+
+    // get name of function from parameters
+    const functionName = parameters.funcName;
+    // type of type of function
+    const stateMutability = parameters.stateMutability;
+    // get arguments of function from parameters
+    const inputs = parameters.inputs;
+    // define array
+    const args: any[] = [];
+
+    // definet any variable
+    let result: any;
+
+    if (stateMutability === "view" || stateMutability === "pure") {
+      for (let i = 0; i < inputs.length; i++) {
+        args.push(inputs[i].value);
+      }
+      result = await contract[functionName](...args);
+    } else {
+      for (let i = 0; i < inputs.length; i++) {
+        args.push(inputs[i].value);
+      }
+      // user address call with . setting gas manually
+      let tx = await contract[functionName](...args, { gasLimit: 3e6 });
+
+      result = await tx.wait();
+      result = JSON.stringify(result, null, 2);
+    }
+
+    setResult(result);
+  };
+
   const handleCallFuncClick = async () => {
-    let results = await callFunction(abi, parameters, walletAddress);
-    setResultOfCall(results.toString());
+    await handlerCallFuncResult();
   };
 
   const onChange = (name: string) => (value: string | Parameters) => {
@@ -138,8 +179,7 @@ export const useAbiEncoder = () => {
 
   useEffect(() => {
     // const { errors, encoded } = encode(parameters);
-
-    setEncoded(resultOfCall);
+    setEncoded(result);
     // setEncodeErrors(errors);
   }, [
     parameters,
@@ -147,7 +187,7 @@ export const useAbiEncoder = () => {
     parameters.contractAddress,
     parameters.funcName,
     parameters.inputs,
-    resultOfCall,
+    result,
   ]);
 
   return {
@@ -161,6 +201,5 @@ export const useAbiEncoder = () => {
     handleCallFuncClick,
     abiFunctions,
     parameters,
-    walletAddress,
   };
 };

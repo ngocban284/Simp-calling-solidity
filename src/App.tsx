@@ -20,12 +20,11 @@ function App() {
     parameters,
     abiFunctions,
     encodeErrors,
-    walletAddress,
   } = useAbiEncoder();
 
   return (
     <Providers>
-      <Header walletAddress={walletAddress} />
+      <Header />
 
       <ParseSection
         onChange={onChange("abi")}
