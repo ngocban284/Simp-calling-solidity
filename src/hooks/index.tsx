@@ -8,7 +8,7 @@ import {
   Parameters,
 } from "../interfaces";
 
-import { encode, parse, callFunction } from "../utils";
+import { encode, parse } from "../utils";
 import { pushGtagEvent } from "../utils/gtag";
 
 declare const window: any;

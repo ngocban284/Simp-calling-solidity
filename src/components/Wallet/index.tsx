@@ -1,5 +1,4 @@
 // connect wallet component
-import { connectWallet } from "../../utils";
 import { useMetaMask } from "metamask-react";
 
 import { ethers } from "ethers";
