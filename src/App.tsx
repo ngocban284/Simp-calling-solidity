@@ -4,7 +4,7 @@ import Providers from "./providers";
 import { useAbiEncoder } from "./hooks";
 
 import ParseSection from "./sections/ParseSection";
-import ParametersSection from "./sections/ParametersSection";
+import ParameterSection from "./sections/ParameterSection";
 import EncodedSection from "./sections/EncodedSection";
 import Header from "./components/Header";
 
@@ -34,7 +34,7 @@ function App() {
         parseError={parseError}
       />
 
-      <ParametersSection
+      <ParameterSection
         onChange={onChange("parameters")}
         onCallFunc={handleCallFuncClick}
         value={parameters}
