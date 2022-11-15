@@ -18,7 +18,7 @@ const Section: React.FC<SectionProps> = ({
   const classNames = classnames("section", "container", className);
   //   console.log("classNames", classNames);
   const titleClassNames = classnames("section-title", className);
-  console.log("titleClassNames", titleClassNames);
+  //   console.log("titleClassNames", titleClassNames);
   return (
     <section className={classNames} id={id}>
       {title && <h2 className={`${titleClassNames}`}>{title}</h2>}

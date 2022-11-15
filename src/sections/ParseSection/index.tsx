@@ -66,13 +66,30 @@ const ParseSection: React.FC<ParseSectionProps> = ({
           </>
         )}
       </div>
-      <div className="input-field parse-input">
-        <CodeMirror
-          value={value}
-          onChange={onChange}
-          placeholder={`Enter your ABI json  [{"inputs":[], "name": "myFunction", "type":"function"}]`}
-        />
-      </div>
+      {isAbi == true ? (
+        <>
+          <div className="input-field parse-input">
+            <CodeMirror
+              value={value}
+              onChange={onChange}
+              type="abi"
+              placeholder={`Enter your ABI json  [{"inputs":[], "name": "myFunction", "type":"function"}]`}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="input-field parse-input">
+            <CodeMirror
+              value={value}
+              onChange={onChange}
+              type="artifact"
+              placeholder={`Enter your Artifact json  [{"inputs":[], "name": "myFunction", "type":"function"}]`}
+            />
+          </div>
+        </>
+      )}
+
       <div className="section-parse__buttons">
         {parseError && <label>Enter correct JSON</label>}
         <div>
