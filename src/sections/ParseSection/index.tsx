@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Section from "../../components/Section";
 import CodeMirror from "../../components/CodeMirror";
@@ -22,6 +22,16 @@ const ParseSection: React.FC<ParseSectionProps> = ({
   onParse,
   parseError,
 }) => {
+  const [isAbi, setIsAbi] = useState(true);
+
+  const handleArtifact = () => {
+    setIsAbi(false);
+  };
+
+  const handleAbi = () => {
+    setIsAbi(true);
+  };
+
   const handleParseClick = () => {
     pushGtagParsesActionButton("parse");
     onParse();
@@ -35,6 +45,27 @@ const ParseSection: React.FC<ParseSectionProps> = ({
       className="section-parse"
       title="Enter your contract's ABI to auto-parse"
     >
+      <div className="parser-option">
+        {isAbi == true ? (
+          <>
+            <button className="button button--active" onClick={handleAbi}>
+              Abi
+            </button>
+            <button className="button button--hover" onClick={handleArtifact}>
+              Artifact
+            </button>
+          </>
+        ) : (
+          <>
+            <button className="button button--hover" onClick={handleAbi}>
+              Abi
+            </button>
+            <button className="button button--active" onClick={handleArtifact}>
+              Artifact
+            </button>
+          </>
+        )}
+      </div>
       <div className="input-field parse-input">
         <CodeMirror
           value={value}
