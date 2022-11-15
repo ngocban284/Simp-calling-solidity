@@ -1,11 +1,61 @@
 .section {
-    margin: 50px auto;
+  margin: 50px auto;
+}
+.section__title,
+.section-choose {
+  font-size: 26px;
+  font-weight: 600;
+  color: white;
+  text-align: left;
+  margin: 0 0 20px;
+}
+.section-title,
+.encoded-section {
+  font-size: 26px;
+  font-weight: 600;
+  color: white;
+  text-align: left;
+  margin: 0 0 20px;
 }
 
-.section__title {
-    font-size: 26px;
-    font-weight: 600;
-    color: #fff;
-    text-align: left;
-    margin: 0 0 20px;
+.section-title,
+.section-parse {
+  font-weight: 600;
+  color: white;
+  text-align: left;
+  margin: 0 0 20px;
 }
+
+.payable {
+  font-size: 26px;
+  font-weight: 600;
+  color: #ff4da6 !important;
+  text-align: left;
+  margin: 0 0 20px;
+}
+
+.view {
+  font-size: 26px;
+  font-weight: 600;
+  color: #4ee3ff !important;
+  text-align: left;
+  margin: 0 0 20px;
+}
+
+.nonpayable {
+  font-size: 26px;
+  font-weight: 600;
+  color: #dec88d !important;
+  text-align: left;
+  margin: 0 0 20px;
+}
+
+/* .section-title.section-choose.view {
+  opacity: 0.8;
+}
+.section-title.section-choose.payable {
+  opacity: 0.8;
+}
+.section-title.section-choose.nonpayable {
+  opacity: 0.8;
+} */
