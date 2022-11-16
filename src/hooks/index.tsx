@@ -8,7 +8,7 @@ import {
   Parameters,
 } from "../interfaces";
 
-import { encode, parse } from "../utils";
+import { encode, isArrayType, parse } from "../utils";
 import { pushGtagEvent } from "../utils/gtag";
 
 declare const window: any;
@@ -24,7 +24,9 @@ const useAbiParser = () => {
     if (parseError) {
       setParseError(null);
     }
+
     setAbi(value);
+
     if (!value) {
       setAbiFunctions({});
     }
@@ -35,12 +37,19 @@ const useAbiParser = () => {
       if (parseError) {
         setParseError(null);
       }
+      if (JSON.parse(abi)["abi"]) {
+        const parsedFunctions = parse(
+          JSON.stringify(JSON.parse(abi)["abi"], null, 2)
+        );
+        setAbi(JSON.stringify(JSON.parse(abi)["abi"], null, 2));
+        setAbiFunctions(parsedFunctions);
+      } else {
+        const parsedFunctions = parse(abi);
 
-      const parsedFunctions = parse(abi);
+        setAbi(JSON.stringify(JSON.parse(abi), null, 2));
 
-      setAbi(JSON.stringify(JSON.parse(abi), null, 2));
-
-      setAbiFunctions(parsedFunctions);
+        setAbiFunctions(parsedFunctions);
+      }
     } catch (e: any) {
       pushGtagEvent("error", {
         event_category: "parser",

@@ -22,16 +22,6 @@ const ParseSection: React.FC<ParseSectionProps> = ({
   onParse,
   parseError,
 }) => {
-  const [isAbi, setIsAbi] = useState(true);
-
-  const handleArtifact = () => {
-    setIsAbi(false);
-  };
-
-  const handleAbi = () => {
-    setIsAbi(true);
-  };
-
   const handleParseClick = () => {
     pushGtagParsesActionButton("parse");
     onParse();
@@ -45,50 +35,13 @@ const ParseSection: React.FC<ParseSectionProps> = ({
       className="section-parse"
       title="Enter your contract's ABI to auto-parse"
     >
-      <div className="parser-option">
-        {isAbi == true ? (
-          <>
-            <button className="button button--active" onClick={handleAbi}>
-              Abi
-            </button>
-            <button className="button button--hover" onClick={handleArtifact}>
-              Artifact
-            </button>
-          </>
-        ) : (
-          <>
-            <button className="button button--hover" onClick={handleAbi}>
-              Abi
-            </button>
-            <button className="button button--active" onClick={handleArtifact}>
-              Artifact
-            </button>
-          </>
-        )}
+      <div className="input-field parse-input">
+        <CodeMirror
+          value={value}
+          onChange={onChange}
+          placeholder={`Enter your Artifact json  [{"inputs":[], "name": "myFunction", "type":"function"}]`}
+        />
       </div>
-      {isAbi == true ? (
-        <>
-          <div className="input-field parse-input">
-            <CodeMirror
-              value={value}
-              onChange={onChange}
-              type="abi"
-              placeholder={`Enter your ABI json  [{"inputs":[], "name": "myFunction", "type":"function"}]`}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="input-field parse-input">
-            <CodeMirror
-              value={value}
-              onChange={onChange}
-              type="artifact"
-              placeholder={`Enter your Artifact json  [{"inputs":[], "name": "myFunction", "type":"function"}]`}
-            />
-          </div>
-        </>
-      )}
 
       <div className="section-parse__buttons">
         {parseError && <label>Enter correct JSON</label>}

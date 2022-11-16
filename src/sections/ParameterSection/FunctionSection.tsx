@@ -131,7 +131,7 @@ const FunctionSection: React.FC<ParameterSectionProps> = ({
   )
     funcName = abiFunction.name || "";
   stateMutability = abiFunction.stateMutability || "";
-  console.log("stateMutability", stateMutability);
+  // console.log("stateMutability", stateMutability);
 
   value = {
     ...value,
@@ -150,7 +150,7 @@ const FunctionSection: React.FC<ParameterSectionProps> = ({
   const argumentOptions = getArgumentOptions(value.type);
 
   const className = "section-choose " + stateMutability;
-  console.log("className", className);
+  // console.log("className", className);
 
   return (
     <Section className={`${className}`} title={abiFunction.name}>

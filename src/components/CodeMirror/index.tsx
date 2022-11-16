@@ -10,27 +10,16 @@ interface CodeMirrorProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-  type: string;
 }
 
 const CodeMirror: React.FC<CodeMirrorProps> = ({
   value,
   onChange,
   placeholder,
-  type,
 }) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const onBeforeChange = (value: string, _viewUpdate: ViewUpdate) => {
-    if (type == "artifact") {
-      // value is artifact , change to abi
-      const abi = artifactToAbi(value);
-      //   value = abi;
-      value = JSON.stringify(abi);
-      console.log("value", value);
-    } else {
-      console.log("value", value);
-      onChange(value);
-    }
+    onChange(value);
   };
   const onFocus = () => {
     setIsFocused(false);

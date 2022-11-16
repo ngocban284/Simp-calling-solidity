@@ -31,24 +31,23 @@ export const artifactToAbi = (artifact: any) => {
   if (JSON.parse(artifact)["abi"]) {
     let abi = JSON.parse(artifact)["abi"];
     // convert abi to string
-    abi = JSON.stringify(abi);
     return abi;
   }
-  // artifact of truffle
-  if (JSON.parse(artifact)["compilerOutput"]["abi"]) {
-    let abi = JSON.parse(artifact)["compilerOutput"]["abi"];
-    // change to s
-    abi = JSON.stringify(abi);
-    return abi;
-  }
-  // artifact of etherscan
-  if (JSON.parse(artifact)["result"]) {
-    let abi = JSON.parse(artifact)["result"];
-    abi = JSON.stringify(abi);
-    return abi;
-  }
+  // // artifact of truffle
+  // if (JSON.parse(artifact)["compilerOutput"]["abi"]) {
+  //   let abi = JSON.parse(artifact)["compilerOutput"]["abi"];
+  //   // change to s
+
+  //   return abi;
+  // }
+  // // artifact of etherscan
+  // if (JSON.parse(artifact)["result"]) {
+  //   let abi = JSON.parse(artifact)["result"];
+
+  //   return abi;
+  // }
   // // artifact of remix
-  return [];
+  return;
 };
 
 export const getPlaceholder = (type: string, item?: AbiInput) => {
