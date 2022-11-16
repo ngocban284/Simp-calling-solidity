@@ -41,11 +41,12 @@ const useAbiParser = () => {
         const parsedFunctions = parse(
           JSON.stringify(JSON.parse(abi)["abi"], null, 2)
         );
+        // console.log("parsedFunctions", parsedFunctions);
         setAbi(JSON.stringify(JSON.parse(abi)["abi"], null, 2));
         setAbiFunctions(parsedFunctions);
       } else {
         const parsedFunctions = parse(abi);
-
+        // console.log("parsedFunctions", parsedFunctions);
         setAbi(JSON.stringify(JSON.parse(abi), null, 2));
 
         setAbiFunctions(parsedFunctions);

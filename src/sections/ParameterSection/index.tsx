@@ -63,6 +63,7 @@ const ParameterSection: React.FC<ParameterSectionProps> = ({
           onCallFunc={onCallFunc}
           value={value}
           errors={errors}
+          key={keyFunction}
         />
       ))}
     </Section>
