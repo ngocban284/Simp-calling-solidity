@@ -33,7 +33,7 @@ const ParseSection: React.FC<ParseSectionProps> = ({
   return (
     <Section
       className="section-parse"
-      title="Enter your contract's ABI to auto-parse"
+      title="Enter your contract's ABI or ARTIFACT to auto-parse"
     >
       <div className="input-field parse-input">
         <CodeMirror
